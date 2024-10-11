@@ -1,0 +1,6 @@
+.calc-wrapper {
+    display: flex;
+    width: 100%;
+    gap: 5px;
+    flex-shrink: 0;
+}

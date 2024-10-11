@@ -1,0 +1,12 @@
+.calc-output-wrapper {
+    width: 750px;
+}
+
+table {
+    width: 750px;
+}
+
+.cell-align-right {
+    text-align: right;
+    padding-right: 25px
+}
