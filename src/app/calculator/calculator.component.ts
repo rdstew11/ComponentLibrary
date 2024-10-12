@@ -1,19 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CalcInputComponent } from "../calc-input/calc-input.component";
 import { AmortizationSchedule, Loan, PeriodSnapshot } from '../amortization';
-import { CalcOutputComponent } from "../calc-output/calc-output.component";
+import { Table } from "../table/table.component";
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
     selector: 'calculator',
     standalone: true,
-    imports: [CalcInputComponent, CalcOutputComponent],
+    imports: [CalcInputComponent, Table],
     templateUrl: './calculator.component.html',
     styleUrl: './calculator.component.css'
 })
 export class CalculatorComponent {
-    periods!: PeriodSnapshot[];
+    periods!: BehaviorSubject<PeriodSnapshot[]>;
+
+    constructor() {
+        this.periods = new BehaviorSubject<PeriodSnapshot[]>([]);
+    }
 
     addLoan(loan: Loan) {
-        this.periods = loan.schedule.periods;
+        this.periods.next(loan.schedule.periods);
     }
 }

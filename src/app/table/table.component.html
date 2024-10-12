@@ -38,4 +38,5 @@
         <tr cdk-header-row *cdkHeaderRowDef="displayColumns"></tr>
         <tr cdk-row *cdkRowDef="let row; columns: displayColumns"></tr>
     </table>
+    <paginator [countPerPage]="12" [countOptions]="[12,24,36]"></paginator>
 </div>
