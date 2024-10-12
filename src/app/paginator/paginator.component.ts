@@ -19,7 +19,6 @@ export interface PaginatorState {
 )
 export class Paginator implements OnInit {
     private _state$!: BehaviorSubject<PaginatorState>;
-    private _destroy$!: Subject<void>;
 
     @Input()
     index: number = 0;
@@ -39,12 +38,12 @@ export class Paginator implements OnInit {
         });
     }
 
-    public updateCurrentIndex(index: number) {
+    updateCurrentIndex(index: number) {
         this.index = index;
         this.updatePaginatorState();
     }
 
-    public updateCountPerPage(count: number) {
+    updateCountPerPage(count: number) {
         this.countPerPage = count;
         this.updatePaginatorState();
     }
@@ -56,7 +55,7 @@ export class Paginator implements OnInit {
         });
     }
 
-    public onPaginatorStateChange(): Observable<PaginatorState> {
+    onPaginatorStateChange(): Observable<PaginatorState> {
         return this._state$;
     }
 }

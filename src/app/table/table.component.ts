@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { CdkTableModule } from "@angular/cdk/table";
 import { PeriodSnapshot } from '../amortization';
 import { CurrencyPipe, DatePipe } from '@angular/common';
