@@ -5,11 +5,13 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
 import { TableDataSource } from './datasource';
 import { Paginator } from '../paginator/paginator.component';
 import { Observable, of } from 'rxjs';
+import { TableService } from './table.service';
 
 @Component({
     selector: 'app-table',
     standalone: true,
     imports: [CdkTableModule, CurrencyPipe, DatePipe, Paginator],
+    providers: [TableService],
     templateUrl: './table.component.html',
     styleUrl: './table.component.css'
 })
@@ -24,7 +26,7 @@ export class Table implements AfterViewInit, OnChanges {
     @ViewChild(Paginator)
     paginator!: Paginator;
 
-    constructor() {
+    constructor(private tableService: TableService) {
         this.dataSource = new TableDataSource<PeriodSnapshot>(of([]));
     }
 

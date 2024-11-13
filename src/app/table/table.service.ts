@@ -1,10 +1,9 @@
-import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
-import { Paginator, PaginatorState } from "../paginator/paginator.component";
+import { Injectable } from '@angular/core';
 
+@Injectable({
+  providedIn: 'root'
+})
+export class TableService {
 
-@Injectable()
-export class TableInternalService {
-
-
+  constructor() { }
 }

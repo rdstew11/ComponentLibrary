@@ -1,0 +1,24 @@
+.paginator-container {
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+}
+
+.page-btn {
+    background-color: white;
+    color: #919593;
+    border-radius: 0 0 2px 2px;
+    border-left: 1px solid #919593;
+    border-right: 1px solid #919593;
+    border-bottom: 1px solid #919593;
+    border-top: none;
+}
+
+.page-btn:not(:first-child) {
+    border-left: none;
+}
+
+.page-btn:hover {
+    cursor: pointer;
+    background-color: #e2e3e2;
+}

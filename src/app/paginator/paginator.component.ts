@@ -1,6 +1,6 @@
-import { BehaviorSubject, Observable, Subject, takeUntil } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { Component, Input, OnInit } from "@angular/core";
-import { TableInternalService } from "../table/table.service";
+import { CommonModule } from "@angular/common";
 
 export interface PaginatorState {
     index: number;
@@ -11,8 +11,7 @@ export interface PaginatorState {
     {
         selector: 'paginator',
         standalone: true,
-        imports: [],
-        providers: [TableInternalService],
+        imports: [CommonModule],
         templateUrl: './paginator.component.html',
         styleUrl: './paginator.component.css'
     }
@@ -57,5 +56,11 @@ export class Paginator implements OnInit {
 
     onPaginatorStateChange(): Observable<PaginatorState> {
         return this._state$;
+    }
+
+
+    getPageButtons() {
+        console.log('getting page buttons');
+        return [1, 2, 3, 4, 5, 6];
     }
 }
