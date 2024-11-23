@@ -3,41 +3,41 @@
         <div class="calc-title">Mortgage Calculator</div>
         <div class="calc-input">
             <label for="property-value">Property Value:</label>
-            <input id="property-value" name="property-value" type="number" [value]="input_data.property_value"
-                [(ngModel)]="input_data.property_value">
+            <input id="property-value" name="property-value" type="number" [(ngModel)]="input_data.property_value">
         </div>
         <div class="calc-input">
             <label for="down-payment"> Down Payment:</label>
-            <input id="down-payment" name="down-payment" type="number" [value]="input_data.down_payment"
-                [(ngModel)]="input_data.down_payment">
+            <input id="down-payment" name="down-payment" type="number" [(ngModel)]="input_data.down_payment">
         </div>
         <div class="calc-input">
             <label for="interest-rate">Interest Rate:</label>
-            <input id="interest-rate" name="interest-rate" type="number" [value]="input_data.interest_rate"
-                [(ngModel)]="input_data.interest_rate">
+            <input id="interest-rate" name="interest-rate" type="number" [(ngModel)]="input_data.interest_rate">
         </div>
         <div class="calc-input">
             <label for="hoa-dues">Monthly HOA:</label>
-            <input id="hoa-dues" name="hoa-dues" type="number" [value]="input_data.monthly_hoa"
-                [(ngModel)]="input_data.monthly_hoa">
+            <input id="hoa-dues" name="hoa-dues" type="number" [(ngModel)]="input_data.monthly_hoa">
         </div>
 
         <div class="calc-input">
             <label for="yearly-insurance">Yearly Insurance:</label>
-            <input id="yearly-insurance" name="yearly-insurance" type="number" [value]="input_data.yearly_insurance"
+            <input id="yearly-insurance" name="yearly-insurance" type="number"
                 [(ngModel)]="input_data.yearly_insurance">
         </div>
 
         <div class="calc-input">
             <label for="yearly-tax">Yearly Taxes:</label>
-            <input id="yearly-tax" name="yearly-tax" type="number" [value]="input_data.yearly_tax"
-                [(ngModel)]="input_data.yearly_tax">
+            <input id="yearly-tax" name="yearly-tax" type="number" [(ngModel)]="input_data.yearly_tax">
         </div>
 
         <div class="calc-input">
             <label for="total-payments">Total Payments:</label>
-            <input id="total-payments" name="total-payments" type="number" [value]="input_data.total_payments"
-                [(ngModel)]="input_data.total_payments">
+            <input id="total-payments" name="total-payments" type="number" [(ngModel)]="input_data.total_payments">
+        </div>
+
+        <div class="calc-input">
+            <label for="start-date">State Date:</label>
+            <input id="start-date" name="start-date" type="date" [ngModel]="input_data.start_date | date: 'yyyy-MM-dd'"
+                (ngModelChange)="input_data.start_date = $event">
         </div>
     </ng-form>
     <button (click)="calculateAmortization()">Submit</button>

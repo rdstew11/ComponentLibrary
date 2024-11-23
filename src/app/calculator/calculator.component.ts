@@ -12,13 +12,13 @@ import { BehaviorSubject } from 'rxjs';
     styleUrl: './calculator.component.css'
 })
 export class CalculatorComponent {
-    periods!: BehaviorSubject<PeriodSnapshot[]>;
+    periods!: PeriodSnapshot[];
 
     constructor() {
-        this.periods = new BehaviorSubject<PeriodSnapshot[]>([]);
+        this.periods = [];
     }
 
     addLoan(loan: Loan) {
-        this.periods.next(loan.schedule.periods);
+        this.periods = loan.schedule.periods;
     }
 }

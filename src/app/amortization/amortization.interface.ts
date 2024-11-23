@@ -12,16 +12,12 @@ export interface AmortizationInputData {
     total_payments: number;
 }
 
-export interface PaymentBreakdown {
-    interest_amount: number;
-    principal_amount: number;
-    taxs_and_fees_amount: number;
-}
-
 export interface PeriodSnapshot {
     date: Date;
     final_balance: number;
-    breakdown: PaymentBreakdown;
+    interest_amount: number;
+    principal_amount: number;
+    fees_amount: number;
 }
 
 export interface AmortizationSchedule {

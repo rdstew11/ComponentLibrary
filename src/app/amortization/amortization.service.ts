@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AmortizationInputData, PaymentBreakdown, AmortizationSchedule, PeriodSnapshot, Loan } from "./amortization.interface";
+import { AmortizationInputData, AmortizationSchedule, PeriodSnapshot, Loan } from "./amortization.interface";
 
 @Injectable({
     providedIn: 'root'
@@ -43,12 +43,9 @@ export class AmortizationService {
             let snapshot: PeriodSnapshot = {
                 date: new Date(snapshot_date.setMonth(loan.schedule.start_date.getMonth() + i)),
                 final_balance: balance,
-                breakdown: {
-                    interest_amount: interest_amount,
-                    principal_amount: principal_amount,
-                    taxs_and_fees_amount: loan.monthly_fees
-                }
-
+                interest_amount: interest_amount,
+                principal_amount: principal_amount,
+                fees_amount: loan.monthly_fees
             };
 
             loan.schedule.periods.push(snapshot);

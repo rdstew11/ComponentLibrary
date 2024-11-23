@@ -1,42 +1,22 @@
+<table>
+
+</table>
+
+
 <div class="calc-output-wrapper calc-card">
-    <table cdk-table [dataSource]="dataSource">
-        <ng-container cdkColumnDef="date">
-            <th cdk-header-cell *cdkHeaderCellDef>Date</th>
-            <td cdk-cell *cdkCellDef="let row"> {{row.date | date: 'MM/dd/yyyy'}}</td>
-        </ng-container>
-
-        <ng-container cdkColumnDef="balance">
-            <th cdk-header-cell *cdkHeaderCellDef>Balance</th>
-            <td class="cell-align-right" cdk-cell *cdkCellDef="let row">{{row.final_balance | currency : 'USD' :
-                'symbol' :
-                '1.2-2'}}
-            <td>
-        </ng-container>
-
-        <ng-container cdkColumnDef="principal_amount">
-            <th cdk-header-cell *cdkHeaderCellDef>Principal Payment</th>
-            <td class="cell-align-right" cdk-cell *cdkCellDef="let row">{{row.breakdown.principal_amount | currency :
-                'USD' : 'symbol' : '1.2-2'}}
-            </td>
-        </ng-container>
-
-        <ng-container cdkColumnDef="interest_amount">
-            <th cdk-header-cell *cdkHeaderCellDef>Interest Payment</th>
-            <td class="cell-align-right" cdk-cell *cdkCellDef="let row">{{row.breakdown.interest_amount | currency :
-                'USD' : 'symbol' : '1.2-2'}}
-            </td>
-        </ng-container>
-
-        <ng-container cdkColumnDef="fees_amount">
-            <th cdk-header-cell *cdkHeaderCellDef>Tax and Fees Payment</th>
-            <td class="cell-align-right" cdk-cell *cdkCellDef="let row">{{row.breakdown.taxs_and_fees_amount | currency
-                : 'USD' : 'symbol' :
-                '1.2-2'}}
-            </td>
-        </ng-container>
-
-        <tr cdk-header-row *cdkHeaderRowDef="displayColumns"></tr>
-        <tr cdk-row *cdkRowDef="let row; columns: displayColumns"></tr>
+    <table>
+        <tr>
+            <th *ngFor="let column of columns"
+                [ngClass]="[column.type.name + '_header', 'rds_' + column.key + '_header']">
+                {{column.header}}</th>
+        </tr>
+        <tr *ngFor="let row of data">
+            <ng-container *ngFor="let column of columns">
+                <td [ngClass]="[column.type.name + '_cell', 'rds_' + column.key + '_cell']">
+                    <ng-template [rds-cell]="{column: column, row: row}"></ng-template>
+                </td>
+            </ng-container>
+        </tr>
     </table>
-    <paginator [countPerPage]="12" [countOptions]="[12,24,36]"></paginator>
+    <paginator></paginator>
 </div>

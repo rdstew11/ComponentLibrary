@@ -1,14 +1,15 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, input, Output } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { AmortizationInputData, AmortizationService, Loan } from "../amortization";
 import { DownPaymentType } from "../calc.enum";
+import { DatePipe } from '@angular/common';
 
 
 @Component({
     selector: 'calc-input',
     standalone: true,
     imports: [
-        FormsModule
+        FormsModule, DatePipe
     ],
     templateUrl: './calc-input.component.html',
     styleUrl: './calc-input.component.css'
@@ -30,10 +31,12 @@ export class CalcInputComponent {
     @Output()
     loanOutput = new EventEmitter<Loan>();
 
-
     constructor(private amortization: AmortizationService) { }
 
     calculateAmortization() {
+        if (!this.input_data.start_date?.getDate) {
+            this.input_data.start_date = new Date(this.input_data.start_date + 'T00:00');
+        }
         this.loanOutput.emit(this.amortization.calculate_amortization_schedule(this.input_data));
     }
 }

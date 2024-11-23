@@ -1,45 +1,40 @@
-import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
-import { CdkTableModule } from "@angular/cdk/table";
-import { PeriodSnapshot } from '../amortization';
-import { CurrencyPipe, DatePipe } from '@angular/common';
-import { TableDataSource } from './datasource';
+import { Component, Input, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Paginator } from '../paginator/paginator.component';
-import { Observable, of } from 'rxjs';
 import { TableService } from './table.service';
+import { RdsColDef, RdsTableCell, RdsDateCell, RdsCurrencyCell } from './table_columns';
 
 @Component({
-    selector: 'app-table',
+    selector: 'table-component',
     standalone: true,
-    imports: [CdkTableModule, CurrencyPipe, DatePipe, Paginator],
+    imports: [CommonModule, Paginator, RdsTableCell],
     providers: [TableService],
     templateUrl: './table.component.html',
     styleUrl: './table.component.css'
 })
-export class Table implements AfterViewInit, OnChanges {
+export class Table {
     displayColumns = ['date', 'balance', 'principal_amount', 'interest_amount', 'fees_amount'];
 
     @Input()
-    data: Observable<PeriodSnapshot[]> = new Observable<PeriodSnapshot[]>();
+    data: any[] = [];
 
-    dataSource!: TableDataSource<PeriodSnapshot>;
+    columns: RdsColDef[] = [
+        new RdsColDef({ key: 'date', type: RdsDateCell, header: "Date" }),
+        new RdsColDef({ key: 'final_balance', type: RdsCurrencyCell, header: "Balance" }),
+        new RdsColDef({ key: 'principal_amount', type: RdsCurrencyCell, header: "Principal" }),
+        new RdsColDef({ key: 'interest_amount', type: RdsCurrencyCell, header: "Interest" }),
+        new RdsColDef({ key: 'fees_amount', type: RdsCurrencyCell, header: "Fees" })
+    ];
+
 
     @ViewChild(Paginator)
     paginator!: Paginator;
 
-    constructor(private tableService: TableService) {
-        this.dataSource = new TableDataSource<PeriodSnapshot>(of([]));
+    constructor() {
+
     }
 
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes['data'] && this.data) {
-            this.dataSource.data = this.data;
-        }
-    }
-
-    ngAfterViewInit(): void {
-        this.dataSource.paginator = this.paginator;
-    }
 
 
 }
