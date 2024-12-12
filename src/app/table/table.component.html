@@ -10,7 +10,7 @@
                 [ngClass]="[column.type.name + '_header', 'rds_' + column.key + '_header']">
                 {{column.header}}</th>
         </tr>
-        <tr *ngFor="let row of data">
+        <tr *ngFor="let row of datasource.finalData| async">
             <ng-container *ngFor="let column of columns">
                 <td [ngClass]="[column.type.name + '_cell', 'rds_' + column.key + '_cell']">
                     <ng-template [rds-cell]="{column: column, row: row}"></ng-template>

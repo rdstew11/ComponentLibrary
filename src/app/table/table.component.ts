@@ -1,22 +1,25 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Paginator } from '../paginator/paginator.component';
+import { RdsPaginator } from '../paginator/paginator.component';
 import { TableService } from './table.service';
 import { RdsColDef, RdsTableCell, RdsDateCell, RdsCurrencyCell } from './table_columns';
+import { RdsDataSource } from './data-source';
 
 @Component({
     selector: 'table-component',
     standalone: true,
-    imports: [CommonModule, Paginator, RdsTableCell],
+    imports: [CommonModule, RdsPaginator, RdsTableCell],
     providers: [TableService],
     templateUrl: './table.component.html',
     styleUrl: './table.component.css'
 })
-export class Table {
+export class Table<T> {
     displayColumns = ['date', 'balance', 'principal_amount', 'interest_amount', 'fees_amount'];
 
     @Input()
-    data: any[] = [];
+    set data(data: T[]) {
+        this.datasource.data = data;
+    }
 
     columns: RdsColDef[] = [
         new RdsColDef({ key: 'date', type: RdsDateCell, header: "Date" }),
@@ -27,11 +30,12 @@ export class Table {
     ];
 
 
-    @ViewChild(Paginator)
-    paginator!: Paginator;
+    @ViewChild(RdsPaginator)
+    paginator!: RdsPaginator;
+
+    datasource: RdsDataSource<T> = new RdsDataSource();
 
     constructor() {
-
     }
 
 

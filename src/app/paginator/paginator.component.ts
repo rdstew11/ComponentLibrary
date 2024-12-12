@@ -17,7 +17,7 @@ export interface PaginatorState {
         styleUrl: './paginator.component.css'
     }
 )
-export class Paginator {
+export class RdsPaginator {
 
     constructor(private tableService: TableService) { }
 
