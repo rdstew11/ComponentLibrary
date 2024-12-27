@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RdsPaginator } from '../paginator/paginator.component';
 import { TableService } from './table.service';
@@ -13,7 +13,7 @@ import { RdsDataSource } from './data-source';
     templateUrl: './table.component.html',
     styleUrl: './table.component.css'
 })
-export class Table<T> {
+export class Table<T> implements AfterViewInit {
     displayColumns = ['date', 'balance', 'principal_amount', 'interest_amount', 'fees_amount'];
 
     @Input()
@@ -38,6 +38,10 @@ export class Table<T> {
     constructor() {
     }
 
+
+    ngAfterViewInit(): void {
+        this.datasource.paginator = this.paginator;
+    }
 
 
 

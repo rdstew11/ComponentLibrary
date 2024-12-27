@@ -1,16 +1,11 @@
 <div class="paginator-container">
     <div class="page-buttons">
-        <ng-template *ngFor="let btn of getPageButtons() | async">
-            {{btn}}
-            <button class="page-btn">{{btn}} hey</button>
-        </ng-template>
-
+        <button *ngFor="let btn of getPageButtons() | async" class="page-btn"
+            (click)="updatePageIndex(btn - 1)">{{btn}}</button>
     </div>
     <div class="page-dropdown">
-        <select>
-            <ng-template *ngFor="let option of getPageCountOptions() | async">
-                <option>{{option}}</option>
-            </ng-template>
+        <select [(ngModel)]="countPerPage" (change)="updateCountPerPage()">
+            <option *ngFor="let option of onCountOptionsUpdate() | async" [value]="option">{{option}}</option>
         </select>
     </div>
     <div>

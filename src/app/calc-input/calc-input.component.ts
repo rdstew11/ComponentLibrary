@@ -37,6 +37,7 @@ export class CalcInputComponent {
         if (!this.input_data.start_date?.getDate) {
             this.input_data.start_date = new Date(this.input_data.start_date + 'T00:00');
         }
+        console.log(this.input_data.start_date);
         this.loanOutput.emit(this.amortization.calculate_amortization_schedule(this.input_data));
     }
 }

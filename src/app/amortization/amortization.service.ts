@@ -39,9 +39,11 @@ export class AmortizationService {
             balance -= principal_amount;
 
             let snapshot_date = new Date();
+            snapshot_date.setMonth(loan.schedule.start_date.getMonth() + i);
+            snapshot_date.setDate(loan.schedule.start_date.getDate());
 
             let snapshot: PeriodSnapshot = {
-                date: new Date(snapshot_date.setMonth(loan.schedule.start_date.getMonth() + i)),
+                date: new Date(snapshot_date),
                 final_balance: balance,
                 interest_amount: interest_amount,
                 principal_amount: principal_amount,

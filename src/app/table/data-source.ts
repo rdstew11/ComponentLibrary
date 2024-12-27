@@ -1,5 +1,10 @@
-import { BehaviorSubject, Observable, combineLatest, filter, map } from "rxjs";
+import { BehaviorSubject, ReplaySubject, combineLatestWith, map } from "rxjs";
 import { RdsPaginator } from "../paginator/paginator.component";
+
+interface PaginatorValues {
+    countPerPage: number;
+    index: number;
+}
 
 
 export class RdsDataSource<T> {
@@ -7,7 +12,7 @@ export class RdsDataSource<T> {
     private _data: BehaviorSubject<T[]> = new BehaviorSubject(([] as T[]));
     private _filterValues: BehaviorSubject<any> = new BehaviorSubject([]);
     private _sortValues: BehaviorSubject<any> = new BehaviorSubject([]);
-    private _pageValues: BehaviorSubject<any> = new BehaviorSubject([]);
+    private _pageValues: ReplaySubject<PaginatorValues> = new ReplaySubject();
 
     finalData: BehaviorSubject<T[]> = new BehaviorSubject(([] as T[]));
 
@@ -19,7 +24,24 @@ export class RdsDataSource<T> {
     private _paginator!: RdsPaginator;
 
     set paginator(paginator: RdsPaginator) {
-        this.paginator = paginator;
+        this._paginator = paginator;
+        if (paginator) {
+            console.log("Paginator true");
+            const countPerPage$ = this._paginator.onCountPerPageUpdate();
+            const pageIndex$ = this._paginator.onPageIndexUpdate();
+            countPerPage$.pipe(
+                combineLatestWith(pageIndex$),
+                map(([count, index]) => {
+                    return {
+                        countPerPage: count,
+                        index: index
+                    };
+                })
+            ).subscribe((values: PaginatorValues) => {
+                console.log("Sending next");
+                this._pageValues.next(values);
+            });
+        }
     }
 
     get paginator() {
@@ -32,32 +54,40 @@ export class RdsDataSource<T> {
 
 
     renderData(): void {
-        const filteredData = combineLatest([this._data, this._filterValues]).pipe(
+        const filteredData = this._data.pipe(
+            combineLatestWith(this._filterValues),
             map(([data, filterValue]) => this.filterData(data, filterValue))
-        );
-        const sortedData = combineLatest([filteredData, this._sortValues]).pipe(
+        ).pipe(
+            combineLatestWith(this._sortValues),
             map(([data, sortValues]) => this.sortData(data, sortValues))
-        );
-        const pageData = combineLatest([sortedData, this._pageValues]).pipe(
+        ).pipe(
+            combineLatestWith(this._pageValues),
             map(([data, pageValues]) => this.paginateData(data, pageValues))
         );
 
-        pageData.subscribe((data) => {
+        filteredData.subscribe((data) => {
             this.finalData.next(data);
         });
 
     }
 
     private filterData(data: T[], filterValue: any): T[] {
+        console.log("Filtering data");
         return data;
     }
 
     private sortData(data: T[], sortValue: any): T[] {
+        console.log("Sorting Data");
         return data;
     }
 
-    private paginateData(data: T[], pageValues: any): T[] {
-        return data;
+    private paginateData(data: T[], pageValues: PaginatorValues): T[] {
+        const startIdx = pageValues.index * pageValues.countPerPage;
+        let endIdx = startIdx + pageValues.countPerPage;
+
+        if (endIdx > data.length) { endIdx = data.length; }
+
+        return data.slice(startIdx, endIdx);
     }
 
 }
