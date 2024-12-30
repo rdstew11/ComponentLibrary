@@ -13,13 +13,16 @@ import { RdsGraph } from "../graph/graph.component";
     styleUrl: './calculator.component.css'
 })
 export class CalculatorComponent {
-    periods!: PeriodSnapshot[];
+    periods: PeriodSnapshot[] = [];
+    graphData: number[] = [];
 
-    constructor() {
-        this.periods = [];
-    }
+
+    constructor() { }
 
     addLoan(loan: Loan) {
         this.periods = loan.schedule.periods;
+        this.graphData = this.periods.map((period: PeriodSnapshot) => {
+            return period.final_balance;
+        });
     }
 }

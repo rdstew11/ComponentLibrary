@@ -1,5 +1,5 @@
 <div class="calc-wrapper">
     <calc-input (loanOutput)="addLoan($event)"></calc-input>
     <table-component [data]="periods"></table-component>
-    <rds-graph></rds-graph>
+    <rds-graph [data]="graphData"></rds-graph>
 </div>
