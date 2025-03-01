@@ -3,7 +3,7 @@ import { CalcInputComponent } from "../calc-input/calc-input.component";
 import { AmortizationSchedule, Loan, PeriodSnapshot } from '../amortization';
 import { Table } from "../table/table.component";
 import { BehaviorSubject } from 'rxjs';
-import { RdsGraph } from "../graph/graph.component";
+import { GraphConfig, RdsGraph } from "../graph/graph.component";
 
 @Component({
     selector: 'calculator',
@@ -15,6 +15,10 @@ import { RdsGraph } from "../graph/graph.component";
 export class CalculatorComponent {
     periods: PeriodSnapshot[] = [];
     graphData: number[] = [];
+    graphConfig: GraphConfig = {
+        width: 1920,
+        height: 1080
+    };
 
 
     constructor() { }

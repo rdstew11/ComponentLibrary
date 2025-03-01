@@ -34,8 +34,8 @@ export class RdsGraph implements OnInit, AfterViewInit, OnChanges {
     @Input()
     data!: number[];
 
-    protected width: number = 900;
-    protected height: number = 400;
+    protected width: number = 600;
+    protected height: number = 200;
 
     private xPadding: number = 20;
     private yPadding: number = 20;
@@ -117,7 +117,7 @@ export class RdsGraph implements OnInit, AfterViewInit, OnChanges {
         }
 
         const yScale = (gHeight * 0.9) / yMax;
-        const xScale = gWidth / (data.length - 1);
+        const xScale = gWidth / (data.length);
 
         return {
             cHeight: cHeight,
@@ -157,7 +157,7 @@ export class RdsGraph implements OnInit, AfterViewInit, OnChanges {
         const rHeight = height - (2 * yPad);
         const rWidth = width - (2 * xPad);
 
-        ctx.lineWidth = 4;
+        ctx.lineWidth = 2;
 
         ctx.strokeRect(xPad, yPad, rWidth, rHeight);
     }
@@ -201,14 +201,9 @@ export class RdsGraph implements OnInit, AfterViewInit, OnChanges {
         ctx.lineWidth = 1;
 
         while (idx < data.length - 1) {
-            if (xLoc > cfg.gWidth) {
-                break;
-            }
 
-            const loc1 = this.convertCoordinates(cfg, xLoc, data[idx]);
-            const loc2 = this.convertCoordinates(cfg, xLoc + cfg.xScale, data[idx++]);
-
-            console.log(`(${loc1[0]}, ${loc1[1]}) -> (${loc2[0]}, ${loc2[1]})`);
+            const loc1 = this.convertCoordinates(cfg, idx, data[idx]);
+            const loc2 = this.convertCoordinates(cfg, idx + 1, data[idx + 1]);
 
             ctx.moveTo(loc1[0], loc1[1]);
             ctx.lineTo(loc2[0], loc2[1]);
